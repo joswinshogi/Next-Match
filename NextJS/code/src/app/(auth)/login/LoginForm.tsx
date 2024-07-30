@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, Card, CardBody, CardHeader, Input } from "@nextui-org/react";
+import Link from "next/link";
 import React from "react";
 import { GiPadlock } from "react-icons/gi";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
@@ -54,6 +55,7 @@ const LoginForm = () => {
             </Button>
           </div>
         </form>
+        <Link href='/hfhfhf' className="text-secondary p-4">Forget Password</Link>
       </CardBody>
     </Card>
   );

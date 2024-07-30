@@ -1,10 +1,12 @@
 import React from 'react'
+import LoginForm from './LoginForm'
 
 const Login = () => {
   return (
-    <div>
-      Login Page
+    <div className='flex items-center justify-center vertical-center'>
+      <LoginForm/>
     </div>
+  
   )
 }
 

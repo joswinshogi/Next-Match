@@ -3,12 +3,17 @@
 import { Button, Card, CardBody, CardHeader, Input } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";
+import { useForm } from "react-hook-form";
 import { GiPadlock } from "react-icons/gi";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 
 const LoginForm = () => {
-  const [isVisible, setIsVisible] = React.useState(false);
+  const onSubmit = (data: any) => {
+    console.log(data);
+  }
+  const {register,handleSubmit, formState: {errors,isValid}} = useForm()
 
+  const [isVisible, setIsVisible] = React.useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   return (
@@ -23,18 +28,26 @@ const LoginForm = () => {
         </div>
       </CardHeader>
       <CardBody>
-        <form action="">
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-4">
             <Input
+              defaultValue=""
               type="email"
               label="Email"
               placeholder="Enter your email"
               variant="bordered"
+              {...register('email',{required: 'Email is required'})}
+              isInvalid={!!errors.email}
+              errorMessage={errors.email?.message as string}
             />
             <Input
+              defaultValue=""
               label="password"
               variant="bordered"
               placeholder="Enter your password"
+              {...register('password',{required: 'Password is required'})}
+              isInvalid={!!errors.password}
+              errorMessage={errors.password?.message as string}
               endContent={
                 <Button
                   className="bg-transparent"
@@ -50,7 +63,7 @@ const LoginForm = () => {
               }
               type={isVisible ? "text" : "password"}
             />
-            <Button fullWidth color="secondary" type="submit">
+            <Button isDisabled={!isValid} fullWidth color="secondary" type="submit">
               Login
             </Button>
           </div>

@@ -1,5 +1,7 @@
 "use client";
 
+import { loginSchema, LoginSchema } from "@/lib/schemas/loginSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Card, CardBody, CardHeader, Input } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";
@@ -8,10 +10,18 @@ import { GiPadlock } from "react-icons/gi";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 
 const LoginForm = () => {
-  const onSubmit = (data: any) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
+    mode: "onTouched",
+  });
+
+  const onSubmit = (data: LoginSchema) => {
     console.log(data);
-  }
-  const {register,handleSubmit, formState: {errors,isValid}} = useForm()
+  };
 
   const [isVisible, setIsVisible] = React.useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
@@ -36,7 +46,7 @@ const LoginForm = () => {
               label="Email"
               placeholder="Enter your email"
               variant="bordered"
-              {...register('email',{required: 'Email is required'})}
+              {...register("email")}
               isInvalid={!!errors.email}
               errorMessage={errors.email?.message as string}
             />
@@ -45,7 +55,7 @@ const LoginForm = () => {
               label="password"
               variant="bordered"
               placeholder="Enter your password"
-              {...register('password',{required: 'Password is required'})}
+              {...register("password")}
               isInvalid={!!errors.password}
               errorMessage={errors.password?.message as string}
               endContent={
@@ -63,12 +73,19 @@ const LoginForm = () => {
               }
               type={isVisible ? "text" : "password"}
             />
-            <Button isDisabled={!isValid} fullWidth color="secondary" type="submit">
+            <Button
+              isDisabled={!isValid}
+              fullWidth
+              color="secondary"
+              type="submit"
+            >
               Login
             </Button>
           </div>
         </form>
-        <Link href='/hfhfhf' className="text-secondary p-4">Forget Password</Link>
+        <Link href="/hfhfhf" className="text-secondary p-4">
+          Forget Password
+        </Link>
       </CardBody>
     </Card>
   );

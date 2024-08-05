@@ -15,7 +15,7 @@ const RegisterForm = () => {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<RegisterSchema>({
-    // resolver: zodResolver(registerSchema),
+    resolver: zodResolver(registerSchema),
     mode: "onTouched",
   });
 

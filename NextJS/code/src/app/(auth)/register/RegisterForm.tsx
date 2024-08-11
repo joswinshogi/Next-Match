@@ -13,15 +13,27 @@ const RegisterForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    setError,
+    formState: { errors, isValid,isSubmitting },
   } = useForm<RegisterSchema>({
-    resolver: zodResolver(registerSchema),
+    // resolver: zodResolver(registerSchema),
     mode: "onTouched",
   });
 
   const onSubmit = async (data: RegisterSchema) => {
     const result = await registerUser(data)
-    console.log(result);
+    if(result.status === "success"){
+      console.log("User registered successfully!")
+    }else{
+        if(Array.isArray(result.error)) {
+          result.error.forEach((e) => {
+            const fieldName = e.path.join(".")as 'email'|'name'|'password';
+            setError(fieldName, {message: e.message})
+          })
+        }else{
+          setError('root.serverError', {message: result.error})
+        }
+    }
   };
 
   const [isVisible, setIsVisible] = React.useState(false);
@@ -83,7 +95,11 @@ const RegisterForm = () => {
               }
               type={isVisible ? "text" : "password"}
             />
+            {errors.root?.serverError && (
+              <p className="text-danger text-sm">{errors.root.serverError.message}</p>
+            )}
             <Button
+              isLoading={isSubmitting}
               isDisabled={!isValid}
               fullWidth
               color="secondary"

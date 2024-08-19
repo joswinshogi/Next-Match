@@ -7,7 +7,7 @@ import { ActionResult } from "@/types";
 import { User } from "@prisma/client";
 import bcrypt from 'bcryptjs';
 import { AuthError } from "next-auth";
-import { signIn } from "@/auth";
+import { signIn, signOut } from "@/auth";
 
 
 export async function signInUser(data: LoginSchema): Promise<ActionResult<string>>{
@@ -36,6 +36,9 @@ export async function signInUser(data: LoginSchema): Promise<ActionResult<string
     }
     
     // Add a return statement here
+}
+export async function signOutUser(){
+    await signOut({redirectTo: '/'})
 }
 
 export async function registerUser(data: RegisterSchema): Promise<ActionResult<User>> {

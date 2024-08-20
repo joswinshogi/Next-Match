@@ -1,7 +1,2 @@
-export const publicRoutes = [
-    '/'
-]
-export const authRotes = [
-    '/login',
-    '/register'
-]
+export const publicRoutes:string[] = ['/']
+export const authRotes:string[] = ['/login','/register']

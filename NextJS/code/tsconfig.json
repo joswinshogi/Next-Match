@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "lib": ["esnext", "dom", "dom.iterable", "scripthost","es6"],
+    "lib": ["es2016", "dom"],
+    "target": "es2017",
     "types": ["node"],
     "allowJs": true,
     "skipLibCheck": true,

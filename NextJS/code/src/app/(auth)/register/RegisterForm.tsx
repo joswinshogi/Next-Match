@@ -4,12 +4,14 @@ import { registerUser } from "@/app/actions/authActions";
 import { registerSchema, RegisterSchema } from "@/lib/schemas/registerSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Card, CardBody, CardHeader, Input } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { GiPadlock } from "react-icons/gi";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 
 const RegisterForm = () => {
+  const router = useRouter()
   const {
     register,
     handleSubmit,
@@ -24,6 +26,7 @@ const RegisterForm = () => {
     const result = await registerUser(data)
     if(result.status === "success"){
       console.log("User registered successfully!")
+      router.push('/login')
     }else{
         if(Array.isArray(result.error)) {
           result.error.forEach((e) => {

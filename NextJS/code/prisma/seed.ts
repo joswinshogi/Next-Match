@@ -1,4 +1,4 @@
-import { Member, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { membersData } from "./membersData";
 import { hash } from "bcryptjs";
 

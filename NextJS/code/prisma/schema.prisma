@@ -55,7 +55,10 @@ model Member {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   photos Photo[]
+  sourceLikes Like[] @relation("source")
+  targetLikes Like[] @relation("target")
 }
+
 model Photo{
   id String @id @default(cuid())
   url String?
@@ -64,4 +67,14 @@ model Photo{
   memberId String
  
   member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+}
+
+model Like {
+  sourceUserId String
+  sourceMember Member @relation("source",fields: [sourceUserId], references: [userId], onDelete: Cascade)
+
+  targetUserId String
+  targetMember Member @relation("target", fields: [targetUserId], references: [userId], onDelete: Cascade)
+
+  @@id([sourceUserId, targetUserId])
 }
